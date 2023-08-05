@@ -1,7 +1,7 @@
-const express = require("express");
 require("dotenv").config();
 const data_url = require("./routes/dataList");
 const cors = require("cors");
+const express = require("express");
 const app = express();
 
 const mongoose = require("mongoose");
@@ -11,7 +11,7 @@ const connectDB = async () => {
   try {
     const connectionParams = {
       useNewUrlParser: true,
-      useCreateIndex: true,
+    //   useCreateIndex: true,
       useUnifiedTopology: true,
     };
     const conn = await mongoose.connect(
@@ -25,13 +25,22 @@ const connectDB = async () => {
   }
 };
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.all("*", function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "PUT, POST, GET, DELETE, PATCH, OPTIONS"
+  );
+  next();
 });
 
 app.use(express.json());
 app.use(cors());
-app.use("/api/dataList", data_url);
+app.get("/", (req, res) => res.send("Welcome to our API service"));
+app.use("/api/data", data_url);
 
 const PORT = process.env.PORT || 8080;
 
