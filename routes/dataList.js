@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-      const lists = await new Video(req.body).save();
+      const lists = await new Data(req.body).save();
       res.send(lists);
     } catch (error) {
       res.send(error);
