@@ -1,9 +1,7 @@
 const express = require("express");
-const port = 3000;
 require("dotenv").config();
 const data_url = require("./routes/dataList");
 const cors = require("cors");
-const express = require("express");
 const app = express();
 
 const mongoose = require("mongoose");
@@ -29,10 +27,6 @@ const connectDB = async () => {
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
 });
 
 app.use(express.json());
